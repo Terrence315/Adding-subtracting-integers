@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adding Integers with the Same Sign</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--ink:#172033;--muted:#667085;--accent:#3157d5;--good:#137a45;--bad:#b42318}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:#172033;color:white;padding:28px 18px;text-align:center} header h1{margin:0 0 8px}
+nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:12px;background:white;position:sticky;top:0;box-shadow:0 2px 8px #0001}
+nav button,.btn{border:0;border-radius:9px;padding:10px 14px;background:var(--accent);color:white;cursor:pointer;font-weight:700}
+main{max-width:980px;margin:22px auto;padding:0 14px}.card{background:var(--card);padding:22px;border-radius:14px;margin:16px 0;box-shadow:0 3px 14px #0001}
+.rule{font-size:1.35rem;text-align:center;padding:18px;border:2px solid #d8e0ff;border-radius:12px;background:#f8f9ff}
+.example{padding:12px;border-left:5px solid var(--accent);margin:10px 0;background:#f7f9ff}
+.q{padding:14px 0;border-bottom:1px solid #eee}.q:last-child{border:0}
+input[type=text],input[type=number]{padding:9px;border:1px solid #bbb;border-radius:7px;width:130px;font-size:1rem}
+.feedback{font-weight:bold;margin-left:8px}.good{color:var(--good)}.bad{color:var(--bad)}
+.score{font-size:1.2rem;font-weight:bold;margin-top:15px}.hidden{display:none}
+.tiles{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px}.tile{width:32px;height:32px;display:grid;place-items:center;color:#fff;border-radius:5px;font-weight:bold}.pos{background:#3157d5}.neg{background:#b42318}
+footer{text-align:center;color:var(--muted);padding:25px}
+@media(max-width:600px){.card{padding:16px}.feedback{display:block;margin:6px 0}}
+</style>
+</head>
+<body>
+<header><h1>Mathematics 700 Fundamentals</h1><div>Adding Integers with the Same Sign</div></header>
+<nav>
+<button onclick="go('learn')">Learn</button><button onclick="go('practice')">Practice</button>
+<button onclick="go('real')">Word Problems</button><button onclick="go('challenge')">Challenge</button>
+</nav>
+<main>
+<section id="learn" class="card">
+<h2>Learning Goals</h2><p>✓ Add integers that have the same sign.<br>✓ Use integer addition to solve real-world word problems.</p>
+<h2>Key Vocabulary</h2><p><b>Addend:</b> a number to be added.<br><b>Sum:</b> the result of adding two or more numbers.</p>
+<h2>The Same-Sign Rule</h2><div class="rule"><b>ADD the numbers, then KEEP the common sign.</b><br><br>Positive + Positive = Positive<br>Negative + Negative = Negative</div>
+<h3>Worked Examples</h3>
+<div class="example">−3 + (−11) = <b>−14</b></div><div class="example">37 + 25 = <b>62</b></div>
+<div class="example">−3 + (−9) + (−4) = <b>−16</b></div>
+<h3>Integer Tile Model</h3><p>Positive tiles and negative tiles can help you visualize integers.</p>
+<div class="tiles"><span class="tile neg">−</span><span class="tile neg">−</span><span class="tile neg">−</span><span class="tile neg">−</span><span class="tile neg">−</span></div>
+</section>
+
+<section id="practice" class="card">
+<h2>Practice: Find Each Sum</h2><div id="practiceQs"></div>
+<button class="btn" onclick="check('practiceQs')">Check Answers</button><button class="btn" onclick="resetSet('practiceQs')">Try Again</button>
+<div id="practiceQs-score" class="score"></div>
+</section>
+
+<section id="real" class="card">
+<h2>Real-World Integer Problems</h2><div id="realQs"></div>
+<button class="btn" onclick="check('realQs')">Check Answers</button><button class="btn" onclick="resetSet('realQs')">Try Again</button>
+<div id="realQs-score" class="score"></div>
+</section>
+
+<section id="challenge" class="card">
+<h2>Challenge</h2><div id="challengeQs"></div>
+<button class="btn" onclick="check('challengeQs')">Check Answers</button><button class="btn" onclick="resetSet('challengeQs')">Try Again</button>
+<div id="challengeQs-score" class="score"></div>
+</section>
+</main>
+<footer>Interactive practice • Adding Integers with the Same Sign</footer>
+<script>
+const sets={
+practiceQs:[
+["6 + 9",15],["14 + 8",22],["−5 + (−7)",-12],["−12 + (−4)",-16],
+["23 + 16",39],["−18 + (−9)",-27],["35 + 27",62],["−21 + (−13)",-34],
+["42 + 19",61],["−16 + (−24)",-40],["55 + 38",93],["−31 + (−29)",-60]
+],
+realQs:[
+["Nadia owes $8 for a movie ticket, $3 for popcorn, and $2 for a soda. What integer represents her total debt?",-13],
+["A quarterback backs up 5 yards and then falls back another 6 yards. What is the total change in yardage?",-11],
+["A player loses 3 points in each of two rounds. What is the score change?",-6],
+["Janine has $37 in savings and deposits another $25. What is her new balance?",62],
+["The temperature rises 6°F in the morning and another 8°F later. What is the total change?",14],
+["A diver descends 7 feet and then another 9 feet. What integer represents the total change?",-16]
+],
+challengeQs:[
+["−7 + (−12) + (−5)",-24],["18 + 24 + 36",78],["−25 + (−15) + (−10) + (−5)",-55],
+["−14 + (−9)",-23],["26 + 17",43],["−18 + (−22) + (−10)",-50]
+]};
+function render(id){let el=document.getElementById(id);el.innerHTML=sets[id].map((x,i)=>`<div class="q"><b>${i+1}.</b> ${x[0]}<br><input type="number" data-answer="${x[1]}" aria-label="Answer ${i+1}"> <span class="feedback"></span></div>`).join("")}
+Object.keys(sets).forEach(render);
+function check(id){let qs=document.querySelectorAll(`#${id} input`),score=0;qs.forEach(q=>{let f=q.nextElementSibling;if(Number(q.value)===Number(q.dataset.answer)){f.textContent="✓ Correct";f.className="feedback good";score++}else{f.textContent=`✗ Try again`;f.className="feedback bad"}});document.getElementById(id+"-score").textContent=`Score: ${score} / ${qs.length}`}
+function resetSet(id){document.querySelectorAll(`#${id} input`).forEach(q=>{q.value="";q.nextElementSibling.textContent=""});document.getElementById(id+"-score").textContent=""}
+function go(id){document.getElementById(id).scrollIntoView({behavior:"smooth"})}
+</script>
+</body></html>
